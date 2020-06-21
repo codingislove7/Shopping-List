@@ -26,7 +26,7 @@ function addToList() {
 
   // 1. Create the  Delete button
   const remove = document.createElement("button");
-  remove.classList.add("btn", "btn-sm", "btn-danger", "float-right");
+  remove.classList.add("btn", "btn-sm", "btn-outline-danger", "float-right");
   remove.innerHTML = "Delete";
 
   // 2. Append to list
@@ -35,6 +35,26 @@ function addToList() {
   // 3. Add event handler
   remove.addEventListener("click", function () {
     this.parentNode.remove();
+  });
+
+  // 1. Create the  Done button
+  const done = document.createElement("button");
+  done.classList.add(
+    "btn",
+    "btn-sm",
+    "btn-outline-success",
+    "float-right",
+    "mr-2"
+  );
+  done.innerHTML = "Done";
+
+  // 2. Append to list
+  li.appendChild(done);
+
+  // 3. Add event handler
+  done.addEventListener("click", function () {
+    this.parentNode.classList.add("doneText");
+    this.remove();
   });
 
   // check to input value is not empty
