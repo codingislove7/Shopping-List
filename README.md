@@ -1,3 +1,3 @@
 # Shopping-List
 ![alt text](https://github.com/Super-DLT/Shopping-List/blob/master/screen.jpg)
-https://github.com/Super-DLT/Shopping-List/blob/master/screen.jpg?raw=true
+a Shopping list with local storage to help you have a better shopping experience.
