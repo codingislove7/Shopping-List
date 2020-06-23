@@ -1,16 +1,19 @@
 // select Button to add text
-const btn = document.querySelector("button");
+const btn = document.querySelector(".add");
 // select input to get text
 const input = document.querySelector("input");
 // select ul to add text
-const ul = document.querySelector("ul");
-// store 2 function in one function to run both in event listener
-function funcs() {
-  addToList(), changeColor();
-}
-// listen to click on button to add text to the list
-btn.addEventListener("click", funcs);
+let ul = document.querySelector("ul");
 
+// listen to click on button to add text to the list
+btn.addEventListener("click", addToList);
+// listen to Enter key on input to add text to the list
+input.addEventListener("keypress", function (e) {
+  if (e.key === "Enter") {
+    // code for enter
+    addToList();
+  }
+});
 // add text to the list
 function addToList() {
   // create li tag
@@ -61,27 +64,49 @@ function addToList() {
   if (input.value !== "") {
     // add li to ul tag
     ul.appendChild(li);
+  } else {
+    // focus in input to user enter a text
+    input.focus();
   }
 
   // clear the input value to add more text
   input.value = "";
+
+  // Save the list to localStorage
+  localStorage.setItem("listItems", ul.innerHTML);
 }
 
-function changeColor() {
-  let lists = document.querySelectorAll("li");
+// Check for saved wishlist items
+var saved = localStorage.getItem("listItems");
 
-  // color list
-  let colorsClass = [
-    "list-group-item-primary",
-    "list-group-item-secondary",
-    "list-group-item-success",
-    "list-group-item-warning",
-    "list-group-item-info",
-    "list-group-item-dark",
-  ];
-
-  let color = colorsClass.forEach((e) => {
-    return e;
+// If there are any saved items, update our list
+if (saved) {
+  ul.innerHTML = saved;
+}
+// Add event listener to delete and Done button
+// select the buttons
+const remove = document.querySelectorAll(".btn-outline-danger");
+// 3. Add event handler
+remove.forEach((e) => {
+  e.addEventListener("click", function () {
+    this.parentNode.remove();
+      // Save the list to localStorage
+  localStorage.setItem("listItems", ul.innerHTML);
   });
-  lists.forEach((element) => {});
-}
+});
+const done = document.querySelectorAll(".btn-outline-success");
+// 3. Add event handler
+done.forEach((e) => {
+  e.addEventListener("click", function () {
+    this.parentNode.classList.add("doneText");
+    this.remove();
+    localStorage.setItem("listItems", ul.innerHTML);
+  });
+});
+
+// let a = [1, 2, 3];
+// let b = ["a", "b", "c", "d", "e", "f"];
+// let c = b.map((item, index) => {
+//  return item + a[index % 3];
+// });
+// console.log(c);
