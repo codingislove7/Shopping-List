@@ -25,7 +25,7 @@ function addToList() {
   // add the text to li tag
   li.appendChild(textB);
   // add bootstrap class to li tag
-  li.classList.add("list-group-item");
+  li.classList.add("list-group-item", "border", "my-1");
 
   // 1. Create the  Delete button
   const remove = document.createElement("button");
@@ -38,6 +38,7 @@ function addToList() {
   // 3. Add event handler
   remove.addEventListener("click", function () {
     this.parentNode.remove();
+    localStorage.setItem("listItems", ul.innerHTML);
   });
 
   // 1. Create the  Done button
@@ -58,6 +59,7 @@ function addToList() {
   done.addEventListener("click", function () {
     this.parentNode.classList.add("doneText");
     this.remove();
+    localStorage.setItem("listItems", ul.innerHTML);
   });
 
   // check to input value is not empty
@@ -71,18 +73,18 @@ function addToList() {
 
   // clear the input value to add more text
   input.value = "";
-
+  changeColor();
   // Save the list to localStorage
   localStorage.setItem("listItems", ul.innerHTML);
 }
-
-// Check for saved wishlist items
+// Check for saved list items
 var saved = localStorage.getItem("listItems");
 
 // If there are any saved items, update our list
 if (saved) {
   ul.innerHTML = saved;
 }
+
 // Add event listener to delete and Done button
 // select the buttons
 const remove = document.querySelectorAll(".btn-outline-danger");
@@ -90,8 +92,8 @@ const remove = document.querySelectorAll(".btn-outline-danger");
 remove.forEach((e) => {
   e.addEventListener("click", function () {
     this.parentNode.remove();
-      // Save the list to localStorage
-  localStorage.setItem("listItems", ul.innerHTML);
+    // Save the list to localStorage
+    localStorage.setItem("listItems", ul.innerHTML);
   });
 });
 const done = document.querySelectorAll(".btn-outline-success");
@@ -104,9 +106,23 @@ done.forEach((e) => {
   });
 });
 
+// concat 2 arrays
 // let a = [1, 2, 3];
 // let b = ["a", "b", "c", "d", "e", "f"];
 // let c = b.map((item, index) => {
 //  return item + a[index % 3];
 // });
 // console.log(c);
+function changeColor() {
+  let colors = [
+    "border-primary",
+    "border-secondary",
+    "border-success",
+    "border-info",
+    "border-dark",
+  ];
+  let shoppingList = document.querySelectorAll("li");
+  shoppingList.forEach((e, index) => {
+    e.classList.add(colors[index % 5]);
+  });
+}
